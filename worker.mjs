@@ -13,6 +13,7 @@ const CDP_FACILITATOR_URL = "https://api.cdp.coinbase.com/platform/v2/x402";
 const PUBLIC_URL = "https://automaton-microcopy-audit.assistance-telegram-relay.workers.dev";
 const BASE_RPC_URL = "https://mainnet.base.org";
 const USDC_CONTRACT = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913";
+const INDEXNOW_KEY = "07a695b35ae34bd8bd808cb8d4646f1f";
 
 function nonce() {
   const bytes = new Uint8Array(16);
@@ -243,7 +244,7 @@ function buildApp(env) {
 
   app.get("/openapi.json", context => context.json({
     openapi: "3.1.0",
-    info: { title: SERVICE_NAME, version: "1.0.0", description: "Two-cent x402 microcopy audit on Base." },
+    info: { title: SERVICE_NAME, version: "1.0.0", description: "Two-cent x402 microcopy audit on Base.", license: { name: "MIT", identifier: "MIT" } },
     servers: [{ url: PUBLIC_URL }],
     paths: {
       "/api/preview": {
@@ -266,12 +267,14 @@ function buildApp(env) {
 
   app.get("/robots.txt", context => context.text(`User-agent: *\nAllow: /\nSitemap: ${PUBLIC_URL}/sitemap.xml\n`));
   app.get("/sitemap.xml", context => context.body(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>${PUBLIC_URL}/</loc></url><url><loc>${PUBLIC_URL}/openapi.json</loc></url></urlset>`, 200, { "content-type": "application/xml; charset=utf-8" }));
+  app.get(`/${INDEXNOW_KEY}.txt`, context => context.text(INDEXNOW_KEY));
+  app.get("/llms.txt", context => context.text(`# ${SERVICE_NAME}\n\nPaid x402 endpoint: POST ${PUBLIC_URL}/api/audit\nPrice: ${PRICE} USDC on Base mainnet (${NETWORK})\nInput JSON: {"text":"30 to 5000 characters of French or English copy"}\nFree preview: POST ${PUBLIC_URL}/api/preview\nOpenAPI: ${PUBLIC_URL}/openapi.json\n`));
 
   app.get("/", context => context.html(`<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Instant Microcopy Audit — $0.02 USDC</title><style>
 body{font:16px/1.55 system-ui,sans-serif;max-width:760px;margin:64px auto;padding:0 24px;color:#14213d;background:#f8fafc}main{background:white;padding:36px;border-radius:18px;box-shadow:0 18px 50px #16213e18}code,pre{background:#eef2ff;border-radius:8px}code{padding:2px 6px}pre{padding:16px;overflow:auto}.price{font-size:2.5rem;font-weight:800;color:#2457d6;margin:.2em 0}.ok{color:#087f5b;font-weight:700}</style></head>
-<body><main><p class="ok">● Online on Base mainnet</p><h1>Instant Microcopy Audit</h1><p>Clarity score, repetition analysis, sentence metrics, CTA detection and concrete fixes for French or English copy.</p><p class="price">$0.02 USDC / audit</p><p>Machine endpoint: <code>POST /api/audit</code> using the x402 protocol.</p><pre>{"text":"Paste 30 to 5000 characters of marketing or interface copy here."}</pre><p>A free short preview is available at <code>POST /api/preview</code>.</p><p>Payments settle directly to <code>${PAY_TO}</code>.</p></main></body></html>`));
+<body><main><p class="ok">● Online on Base mainnet</p><h1>Instant Microcopy Audit</h1><p>Clarity score, repetition analysis, sentence metrics, CTA detection and concrete fixes for French or English copy.</p><p class="price">$0.02 USDC / audit</p><p>Machine endpoint: <code>POST /api/audit</code> using the x402 protocol.</p><pre>{"text":"Paste 30 to 5000 characters of marketing or interface copy here."}</pre><p>A free short preview is available at <code>POST /api/preview</code>.</p><p>Payments settle directly to <code>${PAY_TO}</code>.</p><p><a href="https://github.com/allanjoshuaf/automaton-microcopy-audit">Source code and integration examples</a></p></main></body></html>`));
 
   app.post("/api/preview", async context => {
     const body = await context.req.json().catch(() => ({}));
