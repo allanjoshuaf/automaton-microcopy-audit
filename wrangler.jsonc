@@ -1,0 +1,21 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "automaton-microcopy-audit",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-10-09",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "preview_urls": false,
+  "triggers": {
+    "crons": ["*/10 * * * *"]
+  },
+  "kv_namespaces": [
+    {
+      "binding": "AUTOMATON_METRICS",
+      "id": "f34534b0eb914013a5d7ce1bbabd2bd2"
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}
