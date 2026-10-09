@@ -316,9 +316,12 @@ body{font:16px/1.55 system-ui,sans-serif;max-width:760px;margin:64px auto;paddin
   return app;
 }
 
+let cachedApp;
+
 export default {
   fetch(request, env, executionContext) {
-    return buildApp(env).fetch(request, env, executionContext);
+    cachedApp ??= buildApp(env);
+    return cachedApp.fetch(request, env, executionContext);
   },
   async scheduled(_event, env, context) {
     context.waitUntil(refreshRevenue(env));
