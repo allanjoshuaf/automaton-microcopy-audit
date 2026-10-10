@@ -36,6 +36,25 @@ curl -i -X POST \
 
 The production API runs on Cloudflare Workers and does not depend on a home computer, tunnel or open terminal. Request metrics use Workers KV. A scheduled job checks the receiving wallet's Base USDC balance every ten minutes.
 
+## Argent-Zéro operator
+
+The Worker also runs a bounded economic operator every 30 minutes. Its public dashboard is:
+
+`https://automaton-microcopy-audit.assistance-telegram-relay.workers.dev/agent`
+
+The operator uses Gemini's free API tier to choose among a small set of actions enforced by code. Its separate Base wallet is `0x4Da5740E8b2DF79EEd05F25F95F26761A916F0B8`. The signing key is stored only as an encrypted Cloudflare Worker secret and a Windows DPAPI-encrypted local recovery copy.
+
+Financial limits are enforced outside the model:
+
+- maximum payment: 0.10 USDC;
+- maximum daily spend: 0.50 USDC;
+- minimum reserve: 0.02 USDC;
+- spending stops after three paid actions without an independent customer;
+- replication is disabled;
+- the one-time Bazaar catalogue bootstrap is recorded as marketing spend and excluded from customer revenue.
+
+`GET /agent/state` and `GET /agent/activity` expose the machine-readable state and event log. `POST /agent/run` is protected by a secret bearer token and is reserved for authenticated maintenance.
+
 ```powershell
 pnpm install
 pnpm check
