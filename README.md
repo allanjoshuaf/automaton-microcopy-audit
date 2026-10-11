@@ -42,7 +42,7 @@ The Worker also runs a bounded economic operator every 30 minutes. Its public da
 
 `https://automaton-microcopy-audit.assistance-telegram-relay.workers.dev/agent`
 
-The operator uses Gemini's free API tier to choose among a small set of actions enforced by code. Its separate Base wallet is `0x4Da5740E8b2DF79EEd05F25F95F26761A916F0B8`. The signing key is stored only as an encrypted Cloudflare Worker secret and a Windows DPAPI-encrypted local recovery copy.
+The operator uses Gemini's free API tier to choose among a small set of actions enforced by code. It uses the original Automaton wallet `0x9FDBc2B0371072418b6c6F07DC52Ecc51808f55E`, while all autonomous payments remain subject to the code-enforced limits below. The signing key is stored as an encrypted Cloudflare Worker secret.
 
 Financial limits are enforced outside the model:
 
