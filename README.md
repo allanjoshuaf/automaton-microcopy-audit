@@ -11,7 +11,7 @@ A tiny pay-per-call API for French and English marketing, product, support and i
 The service uses the x402 protocol and Coinbase CDP as its facilitator. Payments settle directly to:
 
 ```text
-0x9FDBc2B0371072418b6c6F07DC52Ecc51808f55E
+0x4Da5740E8b2DF79EEd05F25F95F26761A916F0B8
 ```
 
 ## Try the free preview
@@ -42,7 +42,7 @@ The Worker also runs a bounded economic operator every 30 minutes. Its public da
 
 `https://automaton-microcopy-audit.assistance-telegram-relay.workers.dev/agent`
 
-The operator uses Gemini's free API tier to choose among a small set of actions enforced by code. It uses the original Automaton wallet `0x9FDBc2B0371072418b6c6F07DC52Ecc51808f55E`, while all autonomous payments remain subject to the code-enforced limits below. The signing key is stored as an encrypted Cloudflare Worker secret.
+The operator uses Gemini's free API tier to choose among a small set of actions enforced by code. It spends from the funded original Automaton wallet `0x9FDBc2B0371072418b6c6F07DC52Ecc51808f55E`; the service treasury is the separate receiving wallet `0x4Da5740E8b2DF79EEd05F25F95F26761A916F0B8`. All autonomous payments remain subject to the code-enforced limits below. The signing key is stored as an encrypted Cloudflare Worker secret.
 
 Financial limits are enforced outside the model:
 

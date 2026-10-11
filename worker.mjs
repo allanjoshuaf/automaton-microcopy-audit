@@ -8,7 +8,7 @@ import { wrapFetchWithPayment, x402Client } from "@x402/fetch";
 import { ExactEvmScheme as ExactEvmClientScheme } from "@x402/evm/exact/client";
 import { privateKeyToAccount } from "viem/accounts";
 
-const PAY_TO = "0x9FDBc2B0371072418b6c6F07DC52Ecc51808f55E";
+const PAY_TO = "0x4Da5740E8b2DF79EEd05F25F95F26761A916F0B8";
 const PRICE = "$0.02";
 const NETWORK = "eip155:8453";
 const SERVICE_NAME = "Instant Microcopy Audit";
@@ -499,7 +499,7 @@ function buildApp(env) {
       env.AUTOMATON_METRICS.get("revenue:latest"),
     ]);
     let revenue = revenueText ? JSON.parse(revenueText) : null;
-    if (!revenue || Date.now() - Date.parse(revenue.checkedAt) > 15 * 60 * 1000) {
+    if (!revenue || revenue.wallet?.toLowerCase() !== PAY_TO.toLowerCase() || Date.now() - Date.parse(revenue.checkedAt) > 15 * 60 * 1000) {
       revenue = await refreshRevenue(env);
     }
     return context.json({
